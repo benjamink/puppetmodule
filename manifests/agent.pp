@@ -230,16 +230,22 @@ class puppet::agent(
     value   => $trusted_node_data,
   }
 
+  if $environment != undef
+  {
+    $environment_ensure = 'present'
+  } else {
+    $environment_ensure = 'absent'
+  }
   ini_setting {'puppetagentenvironment':
-    ensure  => present,
+    ensure  => $environment_ensure,
     setting => 'environment',
     value   => $environment,
   }
 
   ini_setting {'puppetagentmaster':
-    ensure   => present,
-    setting  => 'server',
-    value    => $puppet_server,
+    ensure  => present,
+    setting => 'server',
+    value   => $puppet_server,
   }
 
   ini_setting {'puppetagentuse_srv_records':

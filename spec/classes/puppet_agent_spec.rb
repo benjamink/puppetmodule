@@ -574,5 +574,25 @@ describe 'puppet::agent', :type => :class do
         )
       }
     end
+    context 'with environment set to undef' do
+      let(:params) do
+        {
+          :environment => 'undef',
+        }
+      end
+
+      it {
+        should contain_ini_setting('puppetagentenvironment').with(
+          :ensure  => 'present',
+          :section => 'agent',
+          :path    => '/etc/puppet/puppet.conf'
+        )
+      }
+      it {
+        should contain_ini_setting('puppetagentenvironment').without(
+          :environment => 'production'
+        )
+      }
+    end
   end
 end
